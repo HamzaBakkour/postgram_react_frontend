@@ -5,9 +5,6 @@ import { BrowserRouter } from "react-router-dom";
 import "./index.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import App from "./App";
-import { Amplify } from 'aws-amplify';
-import awsExports from './aws-exports';
-Amplify.configure(awsExports);
 
 
 //Creating the root application component
