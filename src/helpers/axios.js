@@ -6,7 +6,7 @@ import {
   getUser,
 } from "../hooks/user.actions";
 
-const base = "ec2-16-170-201-40.eu-north-1.compute.amazonaws.com";
+const base = "ec2-13-48-56-68.eu-north-1.compute.amazonaws.com";
 
 const axiosService = axios.create({
   baseURL: base,

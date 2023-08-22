@@ -4,7 +4,7 @@ import axios from "axios";
 
 function useUserActions() {
   const navigate = useNavigate();
-  const baseURL = "ec2-16-170-201-40.eu-north-1.compute.amazonaws.com";
+  const baseURL = "ec2-13-48-56-68.eu-north-1.compute.amazonaws.com";
 
   return {
     login,
