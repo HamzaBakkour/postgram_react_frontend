@@ -17,7 +17,7 @@ function useUserActions() {
   // Login the user
   function login(data) {
     console.log("login, baseURL: ", baseURL);
-    return axios.post(`${baseURL}/auth/login/`, data).then((res) => {
+    return axios.post(`ec2-13-48-56-68.eu-north-1.compute.amazonaws.com/auth/login/`, data).then((res) => {
       // Registering the account and tokens in the store
       setUserData(res.data);
       navigate("/");
