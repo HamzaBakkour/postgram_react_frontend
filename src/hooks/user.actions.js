@@ -1,10 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import axiosService from "../helpers/axios";
-
+import axios from "axios";
 
 function useUserActions() {
   const navigate = useNavigate();
-  const baseURL = "`https://hamzabakkourpostgram.se/api";
+  const baseURL = "https://hamzabakkourpostgram.se";
 
   return {
     login,
@@ -15,46 +15,52 @@ function useUserActions() {
 
 
   // Login the user
-  async function login(data) {
-    const res = await axiosService.post(`${baseURL}/auth/login/`, data);
-    // Registering the account and tokens in the store
-    setUserData(res.data);
-    navigate("/");
+  function login(data) {
+    return axiosService.post(`${baseURL}/auth/login/`, data).then((res) => {
+      // Registering the account and tokens in the store
+      setUserData(res.data);
+      navigate("/");
+    });
   }
 
   // Register the user
-  async function register(data) {
-    const res = await axiosService.post(`${baseURL}/auth/register/`, data);
-    // Registering the account and tokens in the store
-    setUserData(res.data);
-    navigate("/");
+  function register(data) {
+    return axiosService.post(`${baseURL}/auth/register/`, data).then((res) => {
+      // Registering the account and tokens in the store
+      setUserData(res.data);
+      navigate("/");
+    });
   }
 
   // Edit the user
-  async function edit(data, userId) {
-    const res = await axiosService
+  function edit(data, userId) {
+    return axiosService
       .patch(`${baseURL}/user/${userId}/`, data, {
         headers: {
           "content-type": "multipart/form-data",
         },
-      });
-    // Registering the account in the store
-    localStorage.setItem(
-      "auth",
-      JSON.stringify({
-        access: getAccessToken(),
-        refresh: getRefreshToken(),
-        user: res.data,
       })
-    );
+      .then((res) => {
+        // Registering the account in the store
+        localStorage.setItem(
+          "auth",
+          JSON.stringify({
+            access: getAccessToken(),
+            refresh: getRefreshToken(),
+            user: res.data,
+          })
+        );
+      });
   }
 
   // Logout the user
-  async function logout() {
-    await axiosService
-      .post(`${baseURL}/auth/logout/`, { refresh: getRefreshToken() });
-    localStorage.removeItem("auth");
-    navigate("/login");
+  function logout() {
+    return axiosService
+      .post(`${baseURL}/auth/logout/`, { refresh: getRefreshToken() })
+      .then(() => {
+        localStorage.removeItem("auth");
+        navigate("/login");
+      });
   }
 }
 
