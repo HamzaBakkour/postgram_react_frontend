@@ -15,52 +15,46 @@ function useUserActions() {
 
 
   // Login the user
-  function login(data) {
-    return axiosService.post(`${baseURL}/auth/login/`, data).then((res) => {
-      // Registering the account and tokens in the store
-      setUserData(res.data);
-      navigate("/");
-    });
+  async function login(data) {
+    const res = await axiosService.post(`${baseURL}/auth/login/`, data);
+    // Registering the account and tokens in the store
+    setUserData(res.data);
+    navigate("/");
   }
 
   // Register the user
-  function register(data) {
-    return axiosService.post(`${baseURL}/auth/register/`, data).then((res) => {
-      // Registering the account and tokens in the store
-      setUserData(res.data);
-      navigate("/");
-    });
+  async function register(data) {
+    const res = await axiosService.post(`${baseURL}/auth/register/`, data);
+    // Registering the account and tokens in the store
+    setUserData(res.data);
+    navigate("/");
   }
 
   // Edit the user
-  function edit(data, userId) {
-    return axiosService
+  async function edit(data, userId) {
+    const res = await axiosService
       .patch(`${baseURL}/user/${userId}/`, data, {
         headers: {
           "content-type": "multipart/form-data",
         },
-      })
-      .then((res) => {
-        // Registering the account in the store
-        localStorage.setItem(
-          "auth",
-          JSON.stringify({
-            access: getAccessToken(),
-            refresh: getRefreshToken(),
-            user: res.data,
-          })
-        );
       });
+    // Registering the account in the store
+    localStorage.setItem(
+      "auth",
+      JSON.stringify({
+        access: getAccessToken(),
+        refresh: getRefreshToken(),
+        user: res.data,
+      })
+    );
   }
 
   // Logout the user
-  function logout() {
-    return axiosService
-      .post(`${baseURL}/auth/logout/`, { refresh: getRefreshToken() })
-      .then(() => {
-        localStorage.removeItem("auth");
-        navigate("/login");
-      });
+  async function logout() {
+    await axiosService
+      .post(`${baseURL}/auth/logout/`, { refresh: getRefreshToken() });
+    localStorage.removeItem("auth");
+    navigate("/login");
   }
 }
 
