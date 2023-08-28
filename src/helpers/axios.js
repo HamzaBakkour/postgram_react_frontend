@@ -6,17 +6,14 @@ import {
   getUser,
 } from "../hooks/user.actions";
 
-const base = "ec2-13-48-56-68.eu-north-1.compute.amazonaws.com";
 
 const axiosService = axios.create({
-  baseURL: base,
+  baseURL: "hamzabakkourpostgram.se",
   headers: {
     "Content-Type": "application/json",
   },
 });
 
-console.log("axiosService: ", axiosService);
-console.log("baseURL: ", base);
 
 
 axiosService.interceptors.request.use(async (config) => {
@@ -40,9 +37,10 @@ const refreshAuthLogic = async (failedRequest) => {
         refresh: getRefreshToken(),
       },
       {
-        baseURL: base,
+        baseURL: "hamzabakkourpostgram.se",
       }
     )
+    
     .then((resp) => {
       const { access } = resp.data;
       failedRequest.response.config.headers["Authorization"] =

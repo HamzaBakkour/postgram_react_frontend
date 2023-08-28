@@ -1,10 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import axiosService from "../helpers/axios";
-import axios from "axios";
+
 
 function useUserActions() {
   const navigate = useNavigate();
-  const baseURL = "ec2-13-48-56-68.eu-north-1.compute.amazonaws.com";
+  const baseURL = "`https://hamzabakkourpostgram.se/api";
 
   return {
     login,
@@ -16,8 +16,7 @@ function useUserActions() {
 
   // Login the user
   function login(data) {
-    console.log("login, baseURL: ", baseURL);
-    return axios.post(`ec2-13-48-56-68.eu-north-1.compute.amazonaws.com/auth/login/`, data).then((res) => {
+    return axiosService.post(`${baseURL}/auth/login/`, data).then((res) => {
       // Registering the account and tokens in the store
       setUserData(res.data);
       navigate("/");
@@ -26,7 +25,7 @@ function useUserActions() {
 
   // Register the user
   function register(data) {
-    return axios.post(`${baseURL}/auth/register/`, data).then((res) => {
+    return axiosService.post(`${baseURL}/auth/register/`, data).then((res) => {
       // Registering the account and tokens in the store
       setUserData(res.data);
       navigate("/");
